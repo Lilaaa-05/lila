@@ -337,6 +337,7 @@
                             <p><strong>♊ 星座：</strong> 双子座</p>
                             <p><strong>🧠 MBTI：</strong> ISFP-A</p>
                             <p><strong>🏠 出生地：</strong> 神奈川県茅ヶ崎市</p>
+                            <p><strong>🐶 家族史：</strong>曾外祖父Keisuke曾获日本犬舍比赛冠军🏆 </p>
                         </div>
                     </div>
                     <div>
@@ -564,11 +565,11 @@
                 </div>
                 <div class="warning">
                     <strong>💩 便便问题：</strong>
-                    <p>如果她吃了东西便便有点湿气就有可能</p>
+                    <p>如果她吃了东西肚子不适应的话，便便就有可能有点湿气，有一点点几率会粘毛上（最近才剪毛这种几率很低很低！）。这时候需要用干纸巾清理大部分后再用湿纸巾擦干净。或者直接点，建议干纸巾拿完粪便后，用温水花洒冲洗屁股后，用毛巾擦拭，然后吹风筒吹干。</p>
                 </div>                
                 <div class="warning">
-                    <strong>万一要洗澡：</strong>
-                    <p>她去年有两次睡醒当天没精神，碰她一下她就叫。这应该是神经痛，或者睡觉压到了。如果她玩吃喝拉都没问题，那就无视。上次也检查不出什么，第二天就变回动力模式。</p>
+                    <strong>🛀 万一要洗澡：</strong>
+                    <p>上面不小心粘到便便可以简单冲洗屁股。如果你们觉得她出去玩脏了要洗澡就全身冲洗，她估计就是一开始发抖，看结束就不发抖了（都是装的发抖）。然后洗完用毛巾擦干。然后吹干。如果觉得麻烦可以出去洗，到时候告诉我花了多少即可。</p>
                 </div>
             </div>
         </div>
@@ -577,5 +578,213 @@
             <p>🐕 Lila 的生活指南</p>
         </div>
     </div>
+
+    <script>
+        // 1. 页面加载欢迎动画
+        window.addEventListener('DOMContentLoaded', function() {
+            const modules = document.querySelectorAll('.module');
+            modules.forEach((module, index) => {
+                module.style.opacity = '0';
+                module.style.transform = 'translateY(20px)';
+                module.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                
+                setTimeout(() => {
+                    module.style.opacity = '1';
+                    module.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+
+            // 显示欢迎提示
+            showCuteNotification('🐕 欢迎来到Lila的世界！');
+        });
+
+        // 2. 可爱的通知提示
+        function showCuteNotification(message) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #4f7dff 0%, #7fb3ff 100%);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 20px;
+                box-shadow: 0 8px 20px rgba(79, 172, 254, 0.3);
+                font-weight: bold;
+                z-index: 9999;
+                animation: slideIn 0.5s ease, slideOut 0.5s ease 3.5s forwards;
+                font-size: 1em;
+            `;
+            document.body.appendChild(notification);
+        }
+
+        // 3. 添加滑入滑出动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes pulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.1); }
+            }
+
+            .cute-hover {
+                animation: pulse 0.4s ease;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // 4. 模块点击响应
+        document.querySelectorAll('.module h2').forEach(heading => {
+            heading.style.cursor = 'pointer';
+            heading.addEventListener('click', function() {
+                this.classList.add('cute-hover');
+                setTimeout(() => this.classList.remove('cute-hover'), 400);
+                showCuteNotification(this.textContent + ' 👍');
+            });
+        });
+
+        // 5. 滚动动画效果
+        window.addEventListener('scroll', function() {
+            const modules = document.querySelectorAll('.module');
+            modules.forEach(module => {
+                const rect = module.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                
+                if (isVisible) {
+                    module.style.opacity = '1';
+                } else {
+                    module.style.opacity = '0.6';
+                }
+            });
+        });
+
+        // 6. 表格行悬停互动
+        document.querySelectorAll('.module table tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.3s ease';
+                this.style.background = 'linear-gradient(135deg, #f0f4ff 0%, #e8f4fb 100%)';
+                this.style.transform = 'scale(1.02)';
+            });
+            row.addEventListener('mouseleave', function() {
+                this.style.background = '#f8faff';
+                this.style.transform = 'scale(1)';
+            });
+        });
+
+        // 7. 图片载入动画
+        document.querySelectorAll('.photo-section img').forEach(img => {
+            img.addEventListener('load', function() {
+                this.style.animation = 'fadeInScale 0.6s ease';
+            });
+        });
+
+        // 8. 页脚彩蛋 - 点击会有惊喜
+        document.querySelector('.footer').addEventListener('click', function() {
+            createPawprints();
+            showCuteNotification('🐾 Lila踩了一个脚印！');
+        });
+
+        // 9. 生成爪印特效
+        function createPawprints() {
+            const paw = document.createElement('div');
+            paw.textContent = '🐾';
+            paw.style.cssText = `
+                position: fixed;
+                font-size: ${Math.random() * 30 + 20}px;
+                pointer-events: none;
+                animation: pawFall 2s ease-in forwards;
+                z-index: 1000;
+            `;
+            paw.style.left = Math.random() * window.innerWidth + 'px';
+            paw.style.top = '-30px';
+            document.body.appendChild(paw);
+            
+            setTimeout(() => paw.remove(), 2000);
+        }
+
+        // 10. 添加爪印掉落动画
+        const pawStyle = document.createElement('style');
+        pawStyle.textContent = `
+            @keyframes pawFall {
+                to {
+                    transform: translateY(${window.innerHeight}px) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes fadeInScale {
+                from {
+                    opacity: 0;
+                    transform: scale(0.8);
+                }
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+        `;
+        document.head.appendChild(pawStyle);
+
+        // 11. 标题悬停动画
+        document.querySelectorAll('.module h2').forEach(heading => {
+            heading.addEventListener('mouseover', function() {
+                this.style.transform = 'translateX(10px)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+            heading.addEventListener('mouseout', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+
+        // 12. 食物卡片互动
+        document.querySelectorAll('.food-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const text = this.querySelector('strong').textContent;
+                showCuteNotification('Lila 喜欢 ' + text + ' 😋');
+                this.style.transform = 'scale(1.1) rotate(5deg)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 300);
+            });
+        });
+
+        // 13. 随机欢迎语
+        window.addEventListener('load', function() {
+            const greetings = [
+                '🐕 汪汪！',
+                '💕 Lila在招手！',
+                '🎾 来陪我玩吗？',
+                '😴 我有点累...',
+                '🍖 有零食吗？',
+                '🏃 我们一起跑步吧！'
+            ];
+            const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+            setTimeout(() => {
+                showCuteNotification(randomGreeting);
+            }, 1000);
+        });
+    </script>
 </body>
 </html>
