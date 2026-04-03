@@ -94,6 +94,11 @@
             border-radius: 20px;
             box-shadow: 0 4px 15px rgba(79, 172, 254, 0.1);
             border: 1px solid #e0e7ff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
         }
         
         .photo-section img {
@@ -283,28 +288,118 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
-            align-items: start;
+            align-items: stretch;
         }
-        
+
+        .intro-section > div {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
         .intro-info {
             background: linear-gradient(135deg, #f8faff 0%, #f5f9ff 100%);
             padding: 20px;
             border-radius: 12px;
             border: 1px solid #e0e7ff;
-        }
-        
-        .intro-info p {
-            margin: 10px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: 100%;
             line-height: 1.8;
         }
         
         .intro-info strong {
             color: #4f7dff;
         }
+
+        .intro-section .photo-section {
+            margin-bottom: 0;
+        }
         
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid #e0e7ff;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            color: #4f7dff;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #4f7dff, #7fb3ff);
+            transition: left 0.3s ease;
+            z-index: 0;
+        }
+
+        .nav-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(79, 172, 254, 0.2);
+        }
+
+        .nav-btn.active {
+            color: white;
+            border-color: #4f7dff;
+            box-shadow: 0 8px 24px rgba(79, 172, 254, 0.25);
+        }
+
+        .nav-btn.active::before {
+            left: 0;
+        }
+
+        .module {
+            display: none;
+            animation: fadeInModule 0.5s ease forwards;
+        }
+
+        .module.active {
+            display: block;
+        }
+
+        @keyframes fadeInModule {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @media (max-width: 768px) {
             .intro-section {
                 grid-template-columns: 1fr;
+            }
+
+            .photo-section {
+                height: auto;
             }
             
             .header h1 {
@@ -313,6 +408,16 @@
             
             .food-list {
                 grid-template-columns: 1fr;
+            }
+
+            .nav-container {
+                gap: 8px;
+                padding: 0 10px;
+            }
+
+            .nav-btn {
+                padding: 10px 16px;
+                font-size: 0.85em;
             }
         }
     </style>
@@ -324,8 +429,17 @@
             <h1>Lila 生活指南</h1>
         </div>
         
+        <div class="nav-container">
+            <button class="nav-btn active" data-module="intro"><span>👤 个狗介绍</span></button>
+            <button class="nav-btn" data-module="schedule"><span>⏰ 典型的一天</span></button>
+            <button class="nav-btn" data-module="tips"><span>🎮 斗法心得</span></button>
+            <button class="nav-btn" data-module="walk"><span>🚶 散步心得</span></button>
+            <button class="nav-btn" data-module="diet"><span>🍽️ 饮食管理</span></button>
+            <button class="nav-btn" data-module="notes"><span>📒 备注</span></button>
+        </div>
+        
         <!-- 自我介绍模块 -->
-        <div class="module">
+        <div class="module active" id="intro">
             <h2>个狗介绍</h2>
             <div class="module-content">
                 <div class="intro-section">
@@ -338,6 +452,19 @@
                             <p><strong>🧠 MBTI：</strong> ISFP-A</p>
                             <p><strong>🏠 出生地：</strong> 神奈川県茅ヶ崎市</p>
                             <p><strong>🐶 家族史：</strong>曾外祖父Keisuke曾获日本犬舍比赛冠军🏆 </p>
+                            
+                            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #d0d9ff;">
+                                <p style="font-weight: bold; color: #4f7dff; margin-bottom: 8px;">🗣️ 语言能力</p>
+                                <p><strong>中文：</strong>习惯听人用中文和她对话，但除了"喂"和"123"不会对任何口令做出反应</p>
+                                <p><strong>英语（主要口令语言）：</strong> No!!, Wait, Go, Sit, Down, Shake, Toilet, House（由于以前在笼子里吃饭，所以现在放碗地方就是house）</p>
+                                <p><strong>日语：</strong> 懂ありがとうございます。因为经常会议结束就说这句，这代表能和她玩一下。其他的话不知道她懂什么，去宠物酒店寄宿时候可能学了一点</p>
+                            </div>
+
+                            <div style="margin-top: 15px;">
+                                <p style="font-weight: bold; color: #4f7dff; margin-bottom: 8px;">✨ 性格特点</p>
+                                <p><strong>优点：</strong>长得漂亮、喜欢人类、不乱叫、不抢东西吃</p>
+                                <p><strong>缺点：</strong>胆小、不喜欢出门、玩游戏急躁、不喜欢狗！</p>
+                            </div>
                         </div>
                     </div>
                     <div>
@@ -347,24 +474,11 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="section-title">🗣️ 语言能力</div>
-                <ul>
-                    <li><strong>中文：</strong>习惯听人用中文和她对话，但除了"喂"和"123"不会对任何口令做出反应</li>
-                    <li><strong>英语（主要口令语言）：</strong> No!!, wait, go, sit, down, shake, toilet, house（由于以前在笼子里吃饭，所以现在放碗地方就是house）</li>
-                    <li><strong>日语：</strong> 不知道她懂什么，去宠物酒店寄宿时候可能学了一点</li>
-                </ul>
-                
-                <div class="section-title">✨ 性格特点</div>
-                <ul>
-                    <li><strong>优点：</strong>长得漂亮、喜欢人类、不乱叫、不抢东西吃</li>
-                    <li><strong>缺点：</strong>胆小、不喜欢出门、玩游戏急躁、不喜欢狗！</li>
-                </ul>
             </div>
         </div>
         
         <!-- 日程模块 -->
-        <div class="module">
+        <div class="module" id="schedule">
             <h2>Lila典型的一天</h2>
             <div class="module-content">
                 <table>
@@ -399,17 +513,17 @@
                         <tr>
                             <td>9点左右</td>
                             <td>吃完饭拉屎</td>
-                            <td>一般这个时间不拉屎就不知道什么时候拉。（也许晚饭之后）</td>
+                            <td>一般这个时间不拉屎就不知道什么时候拉。（也许午餐小零食或者晚饭之后）</td>
                         </tr>
                         <tr>
-                            <td>9点到12点</td>
-                            <td>开始会小憩一下，快到11点左右开始有点骚动，会盯着主人，觉得主人怎么上那么久班</td>
+                            <td>9：00-12：00</td>
+                            <td>开始会小憩一下，快到11点左右会走来走去，盯着主人，觉得主人怎么上那么久班</td>
                             <td>期间会叫主人抱一下顺便帮她按摩，有空对应，没空说No！</td>
                         </tr>
                         <tr>
                             <td>12:00-12:20</td>
                             <td>第二次玩，要求主人一起玩20分钟。扔玩具、拔河。玩完给零食</td>
-                            <td>吃之前要锻炼口令：sit、down。零食：一般一个口香糖加3块左右小零食</td>
+                            <td>吃之前要锻炼口令：Sit、Down。零食：一般一个口香糖加3块左右小零食</td>
                         </tr>
                         <tr>
                             <td>12:20-18:00</td>
@@ -418,7 +532,7 @@
                         </tr>
                         <tr>
                             <td>18点左右</td>
-                            <td>开始骚动，会走来走去。盯着主人上班</td>
+                            <td>开始走来走去。盯着主人上班</td>
                             <td>-</td>
                         </tr>
                         <tr>
@@ -429,10 +543,10 @@
                         <tr>
                             <td>21:00-21:30</td>
                             <td>第三次玩。30分钟扔玩具拔河。放饭</td>
-                            <td>晚饭：一勺子粮食+鸡肉、青菜（图2）等，但粮食之外为粮食的1/3以内。一般吃完饭还尿布</td>
+                            <td>晚饭：一勺子粮食+鸡肉、青菜（图2）等，但粮食之外为粮食的1/3以内。如果没空做人类食物就混一点点零食即可。一般吃完饭要换尿布</td>
                         </tr>
                         <tr>
-                            <td>21:30-7点</td>
+                            <td>21:30-7：00</td>
                             <td>大睡特睡！</td>
                             <td>-</td>
                         </tr>
@@ -442,44 +556,45 @@
         </div>
         
         <!-- 斗法心得模块 -->
-        <div class="module">
+        <div class="module" id="tips">
             <h2>和Lila大斗法心得</h2>
             <div class="module-content">
                 <div class="section-title">🎮 游戏与互动技巧</div>
                 <ul>
                     <li><strong>固定时间玩耍：</strong>尽量固定时间玩，玩完放饭或者给小零食之后她就会知道游戏结束</li>
-                    <li><strong>玩完不理她：</strong>放完之后就不用理她，不管她盯着你们求完你们都不要理</li>
-                    <li><strong>说No！：</strong>如果看到她一直求玩但已经跟她玩完放饭就用生气语气说No！如果她没蹬腿，或者带小玩具找你们玩的话，然后一直在旁边的话应该就是求抱。如果你们有时间就可以抱她在大腿上摸她头即可。或者跟她说No，她就自己跑走了应该！</li>
+                    <li><strong>玩完不理她：</strong>放完之后就不用理她，不管她盯着你们玩完你们都不要理</li>
+                    <li><strong>说No！：</strong>如果看到她一直求玩但已经跟她玩完放饭就用生气语气说No！如果她没蹬腿，或者带小玩具找你们玩的话，然后一直在旁边的话应该就是求抱求摸摸。如果你们有时间就可以抱她在大腿上摸她头即可。或者跟她说No，她就自己跑走了应该！</li>
                 </ul>
                 
                 <div class="section-title">💡 核心要点</div>
-                <p style="font-size: 1.1em; color: #4f7dff; font-weight: bold;">总之重要就是说No和无视！</p>
+                <p style="font-size: 1.1em; color: #4f7dff; font-weight: bold;">总之重要就是没空理她时候要说No和无视！</p>
             </div>
         </div>
         
         <!-- 散步心得模块 -->
-        <div class="module">
+        <div class="module" id="walk">
             <h2>和Lila散步心得</h2>
             <div class="module-content">
                 <ul>
-                    <li><strong>出门频率：</strong>她不喜欢出门，她以为充满危险。所以平时不用遛她也可。周末可以带她玩1-2次。当然你们喜欢带她出门多一单也是可以，对她身体也好</li>
+                    <li><strong>出门频率：</strong>她不喜欢出门，她以为外面充满危险。所以平时不用遛她也可。周末可以带她玩1-2次。当然你们喜欢带她出门多一点也是可以，帮她运动</li>
                     <li><strong>出门前的准备：</strong>如果她知道要出门会躲起来，并发抖，抓她出来即可</li>
                     <li><strong>出门前会发抖：</strong>如果发现是准备回家就会不抖了。在外不要给她发抖吓到了，都是演戏</li>
                     <li><strong>走路方式：</strong>她开始出门有精力时候会拽着绳子走，这时候尽量拉短绳子即可。当然大空地就随便放长短</li>
-                    <li><strong>害怕汽车和摩托车：</strong>她很怕汽车、摩托车，特别是搬货的，以为是巨型怪物。然后从很远就会不想走，抱她冲过车即可。或者周围不是马路的话放长绳子，她看你们走远了就会充满勇气跟上</li>
+                    <li><strong>害怕汽车和摩托车：</strong>她很怕没熄火的汽车、摩托车，特别是搬货的，以为是巨型怪物。然后从很远就会不想走，抱她冲过车即可。或者周围不是马路的话放长绳子，她看你们走远了就会充满勇气跟上</li>
                     <li><strong>室外饮食：</strong>她在外面不会喝水和吃东西。不过最长8小时不喝水她都可以，所以不用太担心</li>
-                    <li><strong>随地大小便：</strong>如果当天在家拉了出门就不拉屎。尿的话一般会有一次，特别是从室内出来后（至今为止没在咖啡厅尿过应该没事）。屎就用收屎袋收集，尿的话用黄色喷喷喷一下。</li>
+                    <li><strong>随地大小便：</strong>如果当天在家拉了出门就不拉屎。尿的话一般会在外面有一次，特别是从室内出来后（至今为止没在咖啡厅尿过应该没事）。屎就用收屎袋收集，尿的话用黄色喷喷喷一下。</li>
                     <li><strong>咖啡厅的表现：</strong>去到咖啡厅她都会发抖，然后要一起坐凳子。抱她也可，拒绝她也可</li>
                     <li><strong>疲劳判断：</strong>累了她速度就会变慢，跟着她节奏走也可，或者不想等她抱她走就行</li>
                     <li><strong>保护她的腿：</strong>尽量不要让她走楼梯，对她腿不好。3-5个左右台阶没所谓，天桥或爬坡之类不要走</li>
                     <li><strong>回家护理：</strong>回到家用湿巾擦身体。先一张擦脸，然后3-4张擦干净身体。（如果觉得麻烦就少出门最好）</li>
                     <li><strong>牵引绳：</strong>牵引绳的背部如图3所示</li>
+                    <li><strong>外出装备：</strong>都放在包里：看图4</li>
                 </ul>
             </div>
         </div>
         
         <!-- 饮食模块 -->
-        <div class="module">
+        <div class="module" id="diet">
             <h2>关于Lila的饮食</h2>
             <div class="module-content">
                 <div class="section-title">🍽️ 一日两餐</div>
@@ -529,11 +644,22 @@
                         <p style="color: #ff8c42;">⭐️⭐️</p>
                     </div>
                     <div class="food-item">
+                        <strong>🍠 红薯</strong>
+                        <p style="color: #ff8c42;">⭐️⭐️</p>
+                    </div>
+                    <div class="food-item">
                         <strong>🍎 苹果</strong>
                         <p style="color: #fdb833;">⭐️</p>
                     </div>
+                        <div class="food-item">
+                        <strong>🫐 蓝莓</strong>
+                        <p style="color: #fdb833;">⭐️</p>
+                    </div>
                 </div>
-                
+                <div class="warning">
+                    <strong>🥣 洗碗换水</strong>
+                    <p>3天换一次水和洗碗就好。记得不能用洗洁精，用清水冲洗即可</p>
+                </div>
                 <div class="warning">
                     <strong>❌ 千万不能吃的食物</strong>
                     <p>巧克力、葡萄、牛油果、核桃、柠檬等。上面没有的食物也最好查一下再给她</p>
@@ -551,12 +677,12 @@
         </div>
         
         <!-- 备注模块 -->
-        <div class="module">
+        <div class="module" id="notes">
             <h2>📒 备注</h2>
             <div class="module-content">
                 <div class="warning">
                     <strong>🏥 当她生病时：</strong>
-                    <p>如果她拉肚子、吐了之类的，又不玩了。那就去医院，她有保险，任何一家医院都可。钱多少不用管，先帮我给喔。（一般会玩就没事）</p>
+                    <p>如果她拉肚子、吐了之类的，又不玩了，这种情况持续两天就去医院，她有保险，任何一家医院都可。钱多少不用管，先帮我给喔。（一般会玩就没事，最多搞抑郁而已）</p>
                 </div>
                 
                 <div class="warning">
@@ -565,11 +691,20 @@
                 </div>
                 <div class="warning">
                     <strong>💩 便便问题：</strong>
-                    <p>如果她吃了东西肚子不适应的话，便便就有可能有点湿气，有一点点几率会粘毛上（最近才剪毛这种几率很低很低！）。这时候需要用干纸巾清理大部分后再用湿纸巾擦干净。或者直接点，建议干纸巾拿完粪便后，用温水花洒冲洗屁股后，用毛巾擦拭，然后吹风筒吹干。</p>
+                    <p>如果她吃了东西肚子不适应的话，便便就会有点湿，所以有一点点几率会粘毛上（但最近才剪毛这种几率很低很低很低！）。这时候需要用干纸巾清理大部分后再用湿纸巾擦干净。或者直接点，用干纸巾擦完粪便后，用温水（40度左右）花洒冲洗屁股，然后用毛巾擦拭，吹风筒吹干。</p>
                 </div>                
                 <div class="warning">
                     <strong>🛀 万一要洗澡：</strong>
                     <p>上面不小心粘到便便可以简单冲洗屁股。如果你们觉得她出去玩脏了要洗澡就全身冲洗，她估计就是一开始发抖，看结束就不发抖了（都是装的发抖）。然后洗完用毛巾擦干。然后吹干。如果觉得麻烦可以出去洗，到时候告诉我花了多少即可。</p>
+                </div>
+                    <div class="warning">
+                    <strong>🏨 酒店：</strong>
+                    <p>如果实在有事要她住酒店，随便一家都可以，贵一点也可，带上她的疫苗证明和粮食。尽量送她去她经常去的酒店，跟他们说Lila就知道啦，带上她粮食！POOCHIES 电话：03-6421-7039</p>
+                </div>
+                                </div>
+                    <div class="warning">
+                    <strong>🏥 医院：</strong>
+                    <p>附近医院即可啦，反正她有保险没所谓，带上她的疫苗证明和粮食。紧急情况可以咨询她也不怎么去的医院：ペット家族動物病院　西五反田 03-3495-0171</p>
                 </div>
             </div>
         </div>
@@ -580,25 +715,78 @@
     </div>
 
     <script>
-        // 1. 页面加载欢迎动画
-        window.addEventListener('DOMContentLoaded', function() {
-            const modules = document.querySelectorAll('.module');
-            modules.forEach((module, index) => {
-                module.style.opacity = '0';
-                module.style.transform = 'translateY(20px)';
-                module.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                
-                setTimeout(() => {
-                    module.style.opacity = '1';
-                    module.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
+        // Lila相关知识库
+        const lilaFacts = [
+            '🐕 我是约克夏，很漂亮！',
+            '🎂 我的生日是2022年5月25日',
+            '🏆 我的曾外祖父获过犬舍比赛冠军',
+            '🗣️ 我主要听英文口令：No!!, wait, go, sit, down',
+            '💕 我只听得懂"喂"和"123"',
+            '🎾 我最爱玩扔玩具和拔河',
+            '🍖 我最爱吃鸡胸肉和鸡蛋黄',
+            '😴 我很懒，特别爱睡觉',
+            '🐾 我胆小，怕汽车和摩托车',
+            '⏰ 我每天8:30会叫主人起床',
+            '🎮 跟我玩游戏要说"No"和无视我',
+            '🏠 我知道"house"的意思',
+            '💪 我独立，不喜欢狗',
+            '🌟 我的MBTI是ISFP-A',
+            '🧠 我不乱叫，不抢东西吃',
+            '🥗 我爱吃生青菜和包菜',
+            '🚫 不能给我吃巧克力、葡萄、牛油果',
+            '🛀 我讨厌洗澡，洗完就不抖了',
+            '💩 拉肚子时可以试试鸡蛋黄',
+            '🏥 我有保险，生病去医院就好',
+            '☕ 我去咖啡厅会发抖',
+            '🚶 我8小时不喝水也没事',
+            '😴 我下午14点开始大睡',
+            '🎾 中午12点我要求第二次玩',
+            '🍽️ 早饭：2勺粮食加2-3块鸡肉干',
+            '🍽️ 晚饭：1勺粮食加人类食物',
+            '🦴 我不喜欢楼梯，对腿不好',
+            '📸 出门回来要用湿巾擦身体',
+            '🎮 玩游戏时我有点急躁',
+            '💕 我最喜欢人类和主人',
+            '👃 我的嗅觉很灵敏',
+            '🚗 遇到汽车抱我就能冲过去',
+            '🌟 我有专门的生活指南呢'
+        ];
 
-            // 显示欢迎提示
+        // 获取随机Lila知识
+        function getRandomLilaFact() {
+            return lilaFacts[Math.floor(Math.random() * lilaFacts.length)];
+        }
+
+        // 1. 模块切换功能
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const modules = document.querySelectorAll('.module');
+
+        navButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const moduleId = this.getAttribute('data-module');
+                
+                // 更新按钮状态
+                navButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // 更新模块显示
+                modules.forEach(module => module.classList.remove('active'));
+                document.getElementById(moduleId).classList.add('active');
+                
+                // 显示随机Lila知识
+                showCuteNotification(getRandomLilaFact());
+                
+                // 滚动到顶部
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // 2. 页面加载欢迎动画
+        window.addEventListener('DOMContentLoaded', function() {
             showCuteNotification('🐕 欢迎来到Lila的世界！');
         });
 
-        // 2. 可爱的通知提示
+        // 3. 可爱的通知提示
         function showCuteNotification(message) {
             const notification = document.createElement('div');
             notification.textContent = message;
@@ -619,7 +807,7 @@
             document.body.appendChild(notification);
         }
 
-        // 3. 添加滑入滑出动画
+        // 4. 添加滑入滑出动画
         const style = document.createElement('style');
         style.textContent = `
             @keyframes slideIn {
@@ -655,28 +843,12 @@
         `;
         document.head.appendChild(style);
 
-        // 4. 模块点击响应
+        // 5. 模块标题点击响应
         document.querySelectorAll('.module h2').forEach(heading => {
             heading.style.cursor = 'pointer';
             heading.addEventListener('click', function() {
                 this.classList.add('cute-hover');
                 setTimeout(() => this.classList.remove('cute-hover'), 400);
-                showCuteNotification(this.textContent + ' 👍');
-            });
-        });
-
-        // 5. 滚动动画效果
-        window.addEventListener('scroll', function() {
-            const modules = document.querySelectorAll('.module');
-            modules.forEach(module => {
-                const rect = module.getBoundingClientRect();
-                const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-                
-                if (isVisible) {
-                    module.style.opacity = '1';
-                } else {
-                    module.style.opacity = '0.6';
-                }
             });
         });
 
@@ -703,7 +875,7 @@
         // 8. 页脚彩蛋 - 点击会有惊喜
         document.querySelector('.footer').addEventListener('click', function() {
             createPawprints();
-            showCuteNotification('🐾 Lila踩了一个脚印！');
+            showCuteNotification(getRandomLilaFact());
         });
 
         // 9. 生成爪印特效
@@ -770,20 +942,11 @@
             });
         });
 
-        // 13. 随机欢迎语
+        // 13. 加载完成显示随机知识
         window.addEventListener('load', function() {
-            const greetings = [
-                '🐕 汪汪！',
-                '💕 Lila在招手！',
-                '🎾 来陪我玩吗？',
-                '😴 我有点累...',
-                '🍖 有零食吗？',
-                '🏃 我们一起跑步吧！'
-            ];
-            const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
             setTimeout(() => {
-                showCuteNotification(randomGreeting);
-            }, 1000);
+                showCuteNotification(getRandomLilaFact());
+            }, 2500);
         });
     </script>
 </body>
