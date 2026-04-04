@@ -1099,7 +1099,53 @@
             });
         });
 
-        // 13. 加载完成显示随机知识
+        // 13. 点击显示logo特效
+        document.addEventListener('click', function(event) {
+            // 不在按钮、输入框等交互元素上显示logo
+            if (event.target.tagName === 'BUTTON' || event.target.tagName === 'A' || 
+                event.target.closest('.nav-btn')) {
+                return;
+            }
+            
+            createLogoAtClick(event.clientX, event.clientY);
+        });
+
+        function createLogoAtClick(x, y) {
+            const logo = document.createElement('img');
+            logo.src = 'pic/logo.png';
+            logo.style.cssText = `
+                position: fixed;
+                left: ${x}px;
+                top: ${y}px;
+                width: 40px;
+                height: 40px;
+                pointer-events: none;
+                animation: logoFloat 2s ease-out forwards;
+                z-index: 999;
+                transform: translate(-50%, -50%);
+            `;
+            document.body.appendChild(logo);
+            
+            setTimeout(() => logo.remove(), 2000);
+        }
+
+        // 添加logo飘动动画
+        const logoStyle = document.createElement('style');
+        logoStyle.textContent = `
+            @keyframes logoFloat {
+                0% {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(-50%, -200px) scale(0.8) rotate(360deg);
+                }
+            }
+        `;
+        document.head.appendChild(logoStyle);
+
+        // 14. 加载完成显示随机知识
         window.addEventListener('load', function() {
             setTimeout(() => {
                 showCuteNotification(getRandomLilaFact());
