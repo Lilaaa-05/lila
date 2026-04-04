@@ -1099,16 +1099,32 @@
             });
         });
 
-        // 13. 点击显示logo特效
-        document.addEventListener('click', function(event) {
+        // 13. 点击显示logo特效（桌面端和移动端）
+        function handleClickOrTouch(event) {
             // 不在按钮、输入框等交互元素上显示logo
             if (event.target.tagName === 'BUTTON' || event.target.tagName === 'A' || 
                 event.target.closest('.nav-btn')) {
                 return;
             }
             
-            createLogoAtClick(event.clientX, event.clientY);
-        });
+            let x, y;
+            if (event.touches) {
+                // 触摸事件 - 移动端
+                const touch = event.touches[0] || event.changedTouches[0];
+                x = touch.clientX;
+                y = touch.clientY;
+            } else {
+                // 点击事件 - 桌面端
+                x = event.clientX;
+                y = event.clientY;
+            }
+            
+            createLogoAtClick(x, y);
+        }
+
+        // 添加点击和触摸事件
+        document.addEventListener('click', handleClickOrTouch);
+        document.addEventListener('touchend', handleClickOrTouch);
 
         function createLogoAtClick(x, y) {
             const logo = document.createElement('img');
