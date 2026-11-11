@@ -1,558 +1,43 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lila</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', 'Microsoft YaHei', 'Arial', sans-serif;
-            background: linear-gradient(135deg, #f5f7ff 0%, #f0f4ff 50%, #e8f4fb 100%);
-            min-height: 100vh;
-            padding: 20px;
-            background-attachment: fixed;
-        }
-        
-        body::before {
-            content: '🐾 🐕 🐾 🦴 🐾 🐕 🐾';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            font-size: 100px;
-            opacity: 0.05;
-            pointer-events: none;
-            z-index: -1;
-            overflow: hidden;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            background: linear-gradient(135deg, #ffffff 0%, #f5f9ff 100%);
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.15);
-            border: 2px solid #e0e7ff;
-            position: relative;
-        }
-        
-        .header::after {
-            content: '🐕 💕 🎾 💕 🐕';
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 1.5em;
-            letter-spacing: 10px;
-        }
-        
-        .header h1 {
-            font-size: 3.5em;
-            color: #4f7dff;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 0px rgba(79, 125, 255, 0.15);
-            font-weight: 700;
-            letter-spacing: 2px;
-        }
-        
-        .header .paw {
-            font-size: 3em;
-            margin: 10px 0;
-            animation: bounce 1s ease-in-out infinite;
-        }
-        
-        .header p {
-            color: #666;
-            font-size: 1.1em;
-            font-weight: 500;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-        
-        @keyframes waddle {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-        
-        .photo-section {
-            text-align: center;
-            margin-bottom: 40px;
-            background: linear-gradient(135deg, #f8faff 0%, #f5f9ff 100%);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.1);
-            border: 1px solid #e0e7ff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
-        
-        .photo-section img {
-            max-width: 100%;
-            height: auto;
-            max-height: 400px;
-            border-radius: 16px;
-            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.15);
-            transition: transform 0.3s ease;
-            border: 2px solid #e0e7ff;
-        }
-        
-        .photo-section img:hover {
-            transform: scale(1.05);
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .module {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.1);
-            border: 1px solid #e0e7ff;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-        }
-        
-        .module::before {
-            content: '🐾';
-            position: absolute;
-            top: -15px;
-            left: 20px;
-            font-size: 2em;
-            opacity: 0.6;
-        }
-        
-        .module:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.15);
-        }
-        
-        .module h2 {
-            color: #4f7dff;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 700;
-            background: linear-gradient(120deg, #f0f4ff 0%, #f8faff 100%);
-            padding: 15px 20px;
-            border-radius: 12px;
-        }
-        
-        .module h2::before {
-            content: '💕';
-            font-size: 1.3em;
-            animation: heartbeat 0.8s ease-in-out infinite;
-        }
-        
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-        
-        .module-content {
-            color: #333;
-            line-height: 1.8;
-        }
-        
-        .module-content strong {
-            color: #4f7dff;
-        }
-        
-        .module ul, .module li {
-            list-style: none;
-            margin-left: 0;
-        }
-        
-        .module li {
-            padding: 8px 0 8px 30px;
-            position: relative;
-            color: #333;
-        }
-        
-        .module li::before {
-            content: '🐾';
-            position: absolute;
-            left: 0;
-            color: #7fb3ff;
-            font-size: 1.1em;
-        }
-        
-        .module table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .module table th {
-            background: linear-gradient(120deg, #4f7dff 0%, #7fb3ff 100%);
-            color: white;
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-        }
-        
-        .module table td {
-            padding: 12px;
-            border-bottom: 1px solid #e0e7ff;
-        }
-        
-        .module table tr:hover {
-            background: #f8faff;
-        }
-
-        #schedule .module-content table {
-            table-layout: fixed;
-        }
-
-        #schedule .module-content table th:nth-child(1),
-        #schedule .module-content table td:nth-child(1) {
-            width: 15%;
-        }
-
-        #schedule .module-content table th:nth-child(2),
-        #schedule .module-content table td:nth-child(2) {
-            width: 60%;
-            word-wrap: break-word;
-        }
-
-        #schedule .module-content table th:nth-child(3),
-        #schedule .module-content table td:nth-child(3) {
-            width: 25%;
-            word-wrap: break-word;
-        }
-        
-        .module h3 {
-            color: #b8860b;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            font-size: 1.2em;
-        }
-        
-        .food-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 15px 0;
-        }
-        
-        .food-item {
-            background: linear-gradient(135deg, #f8faff 0%, #f5f9ff 100%);
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid #e0e7ff;
-            transition: transform 0.3s ease;
-        }
-        
-        .food-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.12);
-        }
-        }
-        
-        .food-item strong {
-            color: #4f7dff;
-        }
-
-        .equipment-box {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 20px;
-            align-items: start;
-        }
-
-        .equipment-item {
-            background: linear-gradient(135deg, #f8faff 0%, #f5f9ff 100%);
-            border: 2px solid #7fb3ff;
-            border-radius: 12px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .equipment-item h3 {
-            color: #4f7dff;
-            margin-bottom: 12px;
-            font-size: 1.2em;
-            width: 100%;
-            text-align: center;
-        }
-
-        .equipment-item p {
-            color: #666;
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-
-        .equipment-item img {
-            width: 100%;
-            height: auto;
-            max-width: 280px;
-            border-radius: 8px;
-            border: 2px solid #d0d9ff;
-            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.15);
-            display: block;
-        }
-
-        .equipment-item ul {
-            width: 100%;
-        }
-
-        @media (max-width: 768px) {
-            .equipment-box {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .warning {
-            background: linear-gradient(135deg, #fef9f0 0%, #fff8f0 100%);
-            border-left: 4px solid #ff9500;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 12px;
-            border: 1px solid #ffe0b2;
-        }
-        
-        .warning strong {
-            color: #d87e05;
-        }
-        
-        .section-title {
-            color: #4f7dff;
-            font-weight: 700;
-            font-size: 1.1em;
-            margin-top: 15px;
-            margin-bottom: 10px;
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: #666;
-            margin-top: 40px;
-            font-weight: 500;
-        }
-        
-        .intro-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            align-items: stretch;
-        }
-
-        .intro-section > div {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .intro-info {
-            background: linear-gradient(135deg, #f8faff 0%, #f5f9ff 100%);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #e0e7ff;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            height: 100%;
-            line-height: 1.8;
-        }
-        
-        .intro-info strong {
-            color: #4f7dff;
-        }
-
-        .intro-section .photo-section {
-            margin-bottom: 0;
-        }
-        
-        .nav-container {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            padding: 0 20px;
-        }
-
-        .nav-btn {
-            padding: 12px 24px;
-            background: white;
-            border: 2px solid #e0e7ff;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.95em;
-            font-weight: 600;
-            color: #4f7dff;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, #4f7dff, #7fb3ff);
-            transition: left 0.3s ease;
-            z-index: 0;
-        }
-
-        .nav-btn span {
-            position: relative;
-            z-index: 1;
-        }
-
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(79, 172, 254, 0.2);
-        }
-
-        .nav-btn.active {
-            color: white;
-            border-color: #4f7dff;
-            box-shadow: 0 8px 24px rgba(79, 172, 254, 0.25);
-        }
-
-        .nav-btn.active::before {
-            left: 0;
-        }
-
-        .module {
-            display: none;
-            animation: fadeInModule 0.5s ease forwards;
-        }
-
-        .module.active {
-            display: block;
-        }
-
-        @keyframes fadeInModule {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .intro-section {
-                grid-template-columns: 1fr;
-            }
-
-            .photo-section {
-                height: auto;
-            }
-            
-            .header h1 {
-                font-size: 2em;
-            }
-            
-            .food-list {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-container {
-                gap: 8px;
-                padding: 0 10px;
-            }
-
-            .nav-btn {
-                padding: 10px 16px;
-                font-size: 0.85em;
-            }
-        }
-    </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fff8f5"><meta name="description" content="认识小小约克夏 Lila：一份关于日常、玩耍、散步与好好吃饭的可爱生活指南。">
+<title>Lila · 小狗的生活提案</title><link rel="icon" href="pic/logo.PNG"><link rel="stylesheet" href="style.css"><script src="app.js" defer></script><script src="quiz.js" defer></script>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="paw">🐕‍🦺</div>
-            <h1>Lila 生活指南</h1>
-        </div>
-        
-        <div class="nav-container">
-            <button class="nav-btn active" data-module="intro"><span>👤 个狗介绍</span></button>
-            <button class="nav-btn" data-module="schedule"><span>⏰ 典型的一天</span></button>
-            <button class="nav-btn" data-module="tips"><span>🎮 斗法心得</span></button>
-            <button class="nav-btn" data-module="walk"><span>🚶 散步心得</span></button>
-            <button class="nav-btn" data-module="diet"><span>🍽️ 饮食管理</span></button>
-            <button class="nav-btn" data-module="notes"><span>📒 备注</span></button>
-        </div>
-        
-        <!-- 自我介绍模块 -->
-        <div class="module active" id="intro">
-            <h2>个狗介绍</h2>
-            <div class="module-content">
-                <div class="intro-section">
-                    <div>
-                        <div class="intro-info">
-                            <p><strong>🌟 名字：</strong> Lila</p>
-                            <p><strong>🐕 犬种：</strong> 约克夏</p>
-                            <p><strong>🎂 生日：</strong> 2022年5月25日（3岁11个月）</p>
-                            <p><strong>♊ 星座：</strong> 双子座</p>
-                            <p><strong>🧠 MBTI：</strong> ISFP-A</p>
-                            <p><strong>🏠 出生地：</strong> 神奈川県茅ヶ崎市</p>
-                            <p><strong>🐶 家族史：</strong>曾外祖父Keisuke曾获日本犬舍比赛冠军🏆 </p>
-                            
-                            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #d0d9ff;">
-                                <p style="font-weight: bold; color: #4f7dff; margin-bottom: 8px;">🗣️ 语言能力</p>
-                                <p><strong>中文：</strong>习惯听人用中文和她对话，但除了"喂"和"1，2，3"不会对任何口令做出反应</p>
-                                <p><strong>英语（主要口令语言）：</strong> No!!, Wait, Go, Sit, Down, Shake, Toilet, House（由于以前在笼子里吃饭，所以现在放碗地方就是house）</p>
-                                <p><strong>日语：</strong> 懂ありがとうございます。因为经常会议结束说这句，她就大概能猜到这代表能有时间跟她互动。其他的话不知道她懂什么，去宠物酒店寄宿时候可能学了一点</p>
-                            </div>
-
-                            <div style="margin-top: 15px;">
-                                <p style="font-weight: bold; color: #4f7dff; margin-bottom: 8px;">✨ 性格特点</p>
-                                <p><strong>优点：</strong>长得漂亮、喜欢人类、不乱叫、不抢东西吃</p>
-                                <p><strong>缺点：</strong>胆小、不喜欢出门、玩游戏急躁、不喜欢狗！</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="photo-section">
-                            <img src="pic/1.JPG" alt="Lila的照片">
-                            <p style="margin-top: 10px; color: #666;">我是Lila！</p>
-                        </div>
-                    </div>
-                </div>
+<a class="skip-link" href="#guide">跳到生活指南</a>
+<div class="container">
+    <header class="topbar"><a class="brand" href="#intro" aria-label="Lila 首页"><img src="pic/logo.PNG" alt="" width="42" height="42"><span>lila<span class="brand-dot">.</span></span><span class="brand-caption">小狗的生活提案</span></a><span class="topbar-note"><span class="status-dot"></span> A LITTLE DOG, A LOT OF LOVE</span><a class="topbar-link" href="#guide">翻开生活指南 <span>↗</span></a></header>
+    <main>
+    <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy"><div class="eyebrow"><span class="tiny-star">♡</span> WELCOME TO MY HAPPY LITTLE WORLD</div><h1 id="hero-title">今天也要<br><span class="title-oval">可爱<span aria-hidden="true">✧</span></span>一下！</h1><p>嗨，我是 Lila！一只有点胆小、很爱玩耍的约克夏。<br>欢迎翻开我的生活指南，一起把小日子过得毛茸茸。</p><div class="hero-actions"><button class="primary-btn" data-go="intro">认识一下我 <span>↗</span></button><button class="text-btn" data-go="schedule">看看我的一天 <span>→</span></button></div><div class="hero-footnote"><span class="mini-paw">🐾</span><span>吃好 · 睡好 · 玩好 · 被好好爱着</span></div></div>
+        <div class="hero-visual"><span class="photo-spark" aria-hidden="true">✳</span><figure class="portrait"><img src="pic/1.JPG" alt="穿着蓝色小裙子的约克夏 Lila 抬头看着你" fetchpriority="high" width="4032" height="3024"><figcaption><span>a good day with Lila ♡</span><span>♡</span></figcaption></figure><div class="photo-sticker"><span>hi!</span>我是 Lila</div><span class="photo-caption">YOUR NEW LITTLE BESTIE ↗</span></div>
+    </section>
+    <div class="love-strip"><span>SMALL PAWS, BIG PERSONALITY</span><span aria-hidden="true">✳</span><span>生活的可爱，都藏在小事里</span><span aria-hidden="true">✳</span><span>EAT. PLAY. SLEEP. REPEAT.</span></div>
+    <section class="guide" id="guide" aria-label="Lila 生活指南">
+    <div class="guide-top"><div><span class="eyebrow">LILA'S EVERYDAY</span><h2>我的生活使用说明<span>✿</span></h2></div><p>一点小习惯，一本读懂我。</p></div>
+    <nav class="nav-container" role="tablist" aria-label="生活指南栏目"><button class="nav-btn active" id="tab-intro" role="tab" aria-selected="true" aria-controls="intro" tabindex="0" data-module="intro"><span class="nav-icon" aria-hidden="true">♡</span><span>认识 Lila</span><small>01</small></button><button class="nav-btn" id="tab-schedule" role="tab" aria-selected="false" aria-controls="schedule" tabindex="-1" data-module="schedule"><span class="nav-icon" aria-hidden="true">◷</span><span>典型的一天</span><small>02</small></button><button class="nav-btn" id="tab-tips" role="tab" aria-selected="false" aria-controls="tips" tabindex="-1" data-module="tips"><span class="nav-icon" aria-hidden="true">✧</span><span>相处小秘诀</span><small>03</small></button><button class="nav-btn" id="tab-walk" role="tab" aria-selected="false" aria-controls="walk" tabindex="-1" data-module="walk"><span class="nav-icon" aria-hidden="true">♧</span><span>散步指南</span><small>04</small></button><button class="nav-btn" id="tab-diet" role="tab" aria-selected="false" aria-controls="diet" tabindex="-1" data-module="diet"><span class="nav-icon" aria-hidden="true">◡</span><span>好好吃饭</span><small>05</small></button><button class="nav-btn" id="tab-notes" role="tab" aria-selected="false" aria-controls="notes" tabindex="-1" data-module="notes"><span class="nav-icon" aria-hidden="true">▤</span><span>照护备忘</span><small>06</small></button><button class="nav-btn" id="tab-exam" role="tab" aria-selected="false" aria-controls="exam" tabindex="-1" data-module="exam"><span class="nav-icon" aria-hidden="true">☆</span><span>Lila 认定考试</span><small>07</small></button></nav>
+        <section class="module active" id="intro" role="tabpanel" aria-labelledby="tab-intro">
+            <div class="section-heading"><div><span class="eyebrow">NICE TO MEET YOU</span><h2>认识一下，这位小朋友</h2></div><span class="section-index">01 / 07</span></div>
+            <div class="profile-grid">
+                <article class="identity-card">
+                    <span class="card-label">LILA'S ID CARD</span><span class="id-flower" aria-hidden="true">✿</span>
+                    <h3>Lila <span>莉拉</span></h3><p class="identity-sub">小小约克夏，大大个性。</p>
+                    <dl><div><dt>生日</dt><dd>2022.05.25 <span id="age"></span></dd></div><div><dt>星座</dt><dd>双子座 ♊</dd></div><div><dt>MBTI</dt><dd>ISFP-A · 小小艺术家</dd></div><div><dt>出生地</dt><dd>神奈川県茅ヶ崎市</dd></div></dl>
+                    <div class="family-note">🏆 冠军家族的小公主<span>曾外祖父 Keisuke 曾获日本犬舍比赛冠军</span></div>
+                </article>
+                <article class="personality-card"><span class="card-label">A LITTLE ABOUT ME</span><h3>我的可爱，有迹可循。</h3><p>喜欢人类，喜欢玩具，<br>也喜欢有人陪着的每一天。</p><div class="personality-tags"><span>♡ 亲人小甜豆</span><span>不乱叫</span><span>不抢东西吃</span><span>有一点胆小</span><span>不喜欢狗狗</span><span>游戏急性子</span></div><div class="handwritten">please be gentle with me ♡</div></article>
             </div>
-        </div>
-        
+            <article class="language-card"><div><span class="card-label">LET'S TALK</span><h3>和我说说话</h3><p>我是一只多语言小狗。</p></div><div class="language-details">
+                <p><strong><span>中</span> 中文</strong>习惯听中文，除了“喂”和“1，2，3”，不会对其他口令做出反应。</p>
+                <p><strong><span>EN</span> 英语 · 主要口令</strong>No!!, Wait, Go, Sit, Down, Shake, Toilet, House（以前在笼子里吃饭，现在放碗的地方就是 house）。</p>
+                <p><strong><span>あ</span> 日语</strong>懂「ありがとうございます」。会议结束时听到这句，就知道可以找人互动了；寄宿宠物酒店时可能也学过一点。</p>
+            </div></article>
+        </section>
+
         <!-- 日程模块 -->
-        <div class="module" id="schedule">
-            <h2>Lila典型的一天</h2>
+        <div class="module" id="schedule" role="tabpanel" aria-labelledby="tab-schedule" hidden><div class="section-heading"><div><span class="eyebrow">THE LITTLE LILA HANDBOOK</span><h2>Lila典型的一天</h2></div><span class="section-index">02 / 07</span></div>
             <div class="module-content">
                 <table>
                     <thead>
@@ -629,8 +114,7 @@
         </div>
         
         <!-- 斗法心得模块 -->
-        <div class="module" id="tips">
-            <h2>和Lila大斗法心得</h2>
+        <div class="module" id="tips" role="tabpanel" aria-labelledby="tab-tips" hidden><div class="section-heading"><div><span class="eyebrow">THE LITTLE LILA HANDBOOK</span><h2>和Lila大斗法心得</h2></div><span class="section-index">03 / 07</span></div>
             <div class="module-content">
                 <div class="section-title">🎮 游戏与互动技巧</div>
                 <ul>
@@ -646,8 +130,7 @@
         </div>
         
         <!-- 散步心得模块 -->
-        <div class="module" id="walk">
-            <h2>和Lila散步心得</h2>
+        <div class="module" id="walk" role="tabpanel" aria-labelledby="tab-walk" hidden><div class="section-heading"><div><span class="eyebrow">THE LITTLE LILA HANDBOOK</span><h2>和Lila散步心得</h2></div><span class="section-index">04 / 07</span></div>
             <div class="module-content">
                 <ul>
                     <li><strong>出门频率：</strong>她不喜欢出门，她以为外面充满危险。所以平时不用遛她也可。周末可以带她玩1-2次。当然你们喜欢带她出门多一点也是可以，帮她运动</li>
@@ -711,8 +194,7 @@
         </div>
         
         <!-- 饮食模块 -->
-        <div class="module" id="diet">
-            <h2>关于Lila的饮食</h2>
+        <div class="module" id="diet" role="tabpanel" aria-labelledby="tab-diet" hidden><div class="section-heading"><div><span class="eyebrow">THE LITTLE LILA HANDBOOK</span><h2>关于Lila的饮食</h2></div><span class="section-index">05 / 07</span></div>
             <div class="module-content">
                 <div class="section-title">🍽️ 一日两餐</div>
                 <ul>
@@ -800,7 +282,7 @@
                     </div>
                     <div class="equipment-item">
                         <h3>🍖 零食介绍</h3>
-                        <img src="pic/5.JPEG" alt="零食介绍" style="margin-bottom: 15px;">
+                        <img src="pic/5.jpeg" alt="零食介绍" style="margin-bottom: 15px;">
                         <ul style="text-align: left; margin-top: 15px; list-style: none; padding-left: 0;">
                             <li style="margin: 8px 0; padding-left: 24px; position: relative;">
                                 <span style="position: absolute; left: 0;">🐾</span>
@@ -829,8 +311,7 @@
         </div>
         
         <!-- 备注模块 -->
-        <div class="module" id="notes">
-            <h2>📒 备注</h2>
+        <div class="module" id="notes" role="tabpanel" aria-labelledby="tab-notes" hidden><div class="section-heading"><div><span class="eyebrow">THE LITTLE LILA HANDBOOK</span><h2>📒 备注</h2></div><span class="section-index">06 / 07</span></div>
             <div class="module-content">
                 <div class="warning">
                     <strong>🏥 当她生病时：</strong>
@@ -868,7 +349,6 @@
                     <strong>🏨 酒店：</strong>
                     <p>如果实在有事要她住酒店，随便一家都可以，贵一点也可，带上她的疫苗证明和粮食。送她去她经常去的酒店的话就最好，跟他们说Lila就知道啦，带上她粮食！📍POOCHIES 电话：03-6421-7039</p>
                 </div>
-                </div>
                     <div class="warning">
                     <strong>🏥 医院：</strong>
                     <p>附近医院即可啦，反正她有保险没所谓，带上她的疫苗证明。紧急情况可以咨询她也不怎么去的医院：📍ペット家族動物病院　西五反田 03-3495-0171。晚上深夜突发事件可以找 📍港区動物救急医療センター 芝アニマルクリニック 03-6432-4622（完全没找过，不用紧张，只是以防万一）</p>
@@ -876,298 +356,30 @@
             </div>
         </div>
         
-        <div class="footer">
-            <p>🐕 Lila 的生活指南</p>
-        </div>
-    </div>
 
-    <script>
-        // Lila相关知识库
-        const lilaFacts = [
-            '🎂 我在湘南出生，那里有海。',
-            '🧍‍♀️ 我有一个姐姐好像被一个住横滨的家庭用奔驰接走了',
-            '🐶 我只见过我爸爸一面，他见到我竟然发抖（遗传？）',
-            '🏆 我的曾外祖父获过犬舍比赛冠军',
-            '🎾 我最爱玩扔玩具和拔河',
-            '🐔 我最爱吃鸡肉和鸡蛋黄',
-            '🏠 没人在家时候我就睡觉，只要好好睡醒觉就会有人陪我玩',
-            '🔔 门铃响是不是有人来跟我玩！',
-            '😴 到底电脑有什么好看一天到晚看电脑',
-            '⏰ 每天我都是最早醒！',
-            '😨 不喜欢狗，感觉他们会咬我',
-            '🥗 我爱吃生青菜和包菜',
-            '🚫 不能给我吃巧克力、葡萄、牛油果',
-            '🛀 我不喜欢洗澡',
-            '🗻 我看过富士山，你们爬过吗？',
-            '🌸 我家附近樱花可好看了',
-            '🌲 有些狗竟然有花粉症！反正我没有。',
-            '☕️ 目黑川附近的咖啡厅我基本都去过了',
-            '🚶 我在外面不敢吃东西，有毒！',
-            '🎾 我最喜欢玩玩玩玩',
-            '🐶 外面的狗老闻我，怕！',
-            '👃 我的嗅觉很灵敏',
-            '⚓️ 谢谢你们带我看东京湾！',
-            '🧍‍♂️ 据说小民叔叔住附近，不知道能不能遇见他！'
-        ];
+        <section class="module" id="exam" role="tabpanel" aria-labelledby="tab-exam" hidden>
+            <div class="section-heading"><div><span class="eyebrow">HOW WELL DO YOU KNOW ME?</span><h2>Lila 认定考试</h2></div><span class="section-index">07 / 07</span></div>
+            <div class="module-content exam-shell" id="quiz-stage">
+                <div class="exam-welcome">
+                    <span class="card-label">THE OFFICIAL LITTLE BESTIE TEST</span>
+                    <div class="exam-mascot"><img src="pic/logo.PNG" alt="Lila" width="90" height="90"><span>懂我，才算好朋友 ♡</span></div>
+                    <h3>你有多了解 Lila？</h3><p>读完生活指南，来接受这位小朋友的可爱考验。</p>
+                    <div class="exam-rules"><div><strong>30<span>题</span></strong><span>专属题库</span></div><div><strong>10<span>题</span></strong><span>每次随机抽取</span></div><div><strong>8<span>分</span></strong><span>即可合格</span></div></div>
+                    <p class="exam-instructions">单选题 · 每题 1 分 · 不限时<br>交卷后可查看答案和解析，也可以重新抽题挑战。</p>
+                    <button type="button" class="primary-btn" id="exam-start">开始认定考试 ↗</button>
+                </div>
+            </div>
+        </section>
 
-        // 获取随机Lila知识
-        function getRandomLilaFact() {
-            return lilaFacts[Math.floor(Math.random() * lilaFacts.length)];
-        }
+    </section>
 
-        // 1. 模块切换功能
-        const navButtons = document.querySelectorAll('.nav-btn');
-        const modules = document.querySelectorAll('.module');
-
-        navButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const moduleId = this.getAttribute('data-module');
-                
-                // 更新按钮状态
-                navButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                
-                // 更新模块显示
-                modules.forEach(module => module.classList.remove('active'));
-                document.getElementById(moduleId).classList.add('active');
-                
-                // 显示随机Lila知识
-                showCuteNotification(getRandomLilaFact());
-                
-                // 滚动到顶部
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        });
-
-        // 2. 页面加载欢迎动画
-        window.addEventListener('DOMContentLoaded', function() {
-            showCuteNotification('🐕 欢迎来到Lila的世界！');
-        });
-
-        // 3. 可爱的通知提示
-        function showCuteNotification(message) {
-            const notification = document.createElement('div');
-            notification.textContent = message;
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: linear-gradient(135deg, #4f7dff 0%, #7fb3ff 100%);
-                color: white;
-                padding: 15px 25px;
-                border-radius: 20px;
-                box-shadow: 0 8px 20px rgba(79, 172, 254, 0.3);
-                font-weight: bold;
-                z-index: 9999;
-                animation: slideIn 0.5s ease, slideOut 0.5s ease 3.5s forwards;
-                font-size: 1em;
-            `;
-            document.body.appendChild(notification);
-        }
-
-        // 4. 添加滑入滑出动画
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from {
-                    transform: translateX(400px);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            
-            @keyframes slideOut {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(400px);
-                    opacity: 0;
-                }
-            }
-
-            @keyframes pulse {
-                0%, 100% { transform: scale(1); }
-                50% { transform: scale(1.1); }
-            }
-
-            .cute-hover {
-                animation: pulse 0.4s ease;
-            }
-        `;
-        document.head.appendChild(style);
-
-        // 5. 模块标题点击响应
-        document.querySelectorAll('.module h2').forEach(heading => {
-            heading.style.cursor = 'pointer';
-            heading.addEventListener('click', function() {
-                this.classList.add('cute-hover');
-                setTimeout(() => this.classList.remove('cute-hover'), 400);
-            });
-        });
-
-        // 6. 表格行悬停互动
-        document.querySelectorAll('.module table tbody tr').forEach(row => {
-            row.addEventListener('mouseenter', function() {
-                this.style.transition = 'all 0.3s ease';
-                this.style.background = 'linear-gradient(135deg, #f0f4ff 0%, #e8f4fb 100%)';
-                this.style.transform = 'scale(1.02)';
-            });
-            row.addEventListener('mouseleave', function() {
-                this.style.background = '#f8faff';
-                this.style.transform = 'scale(1)';
-            });
-        });
-
-        // 7. 图片载入动画
-        document.querySelectorAll('.photo-section img').forEach(img => {
-            img.addEventListener('load', function() {
-                this.style.animation = 'fadeInScale 0.6s ease';
-            });
-        });
-
-        // 8. 页脚彩蛋 - 点击会有惊喜
-        document.querySelector('.footer').addEventListener('click', function() {
-            createPawprints();
-            showCuteNotification(getRandomLilaFact());
-        });
-
-        // 9. 生成爪印特效
-        function createPawprints() {
-            const paw = document.createElement('div');
-            paw.textContent = '🐾';
-            paw.style.cssText = `
-                position: fixed;
-                font-size: ${Math.random() * 30 + 20}px;
-                pointer-events: none;
-                animation: pawFall 2s ease-in forwards;
-                z-index: 1000;
-            `;
-            paw.style.left = Math.random() * window.innerWidth + 'px';
-            paw.style.top = '-30px';
-            document.body.appendChild(paw);
-            
-            setTimeout(() => paw.remove(), 2000);
-        }
-
-        // 10. 添加爪印掉落动画
-        const pawStyle = document.createElement('style');
-        pawStyle.textContent = `
-            @keyframes pawFall {
-                to {
-                    transform: translateY(${window.innerHeight}px) rotate(360deg);
-                    opacity: 0;
-                }
-            }
-
-            @keyframes fadeInScale {
-                from {
-                    opacity: 0;
-                    transform: scale(0.8);
-                }
-                to {
-                    opacity: 1;
-                    transform: scale(1);
-                }
-            }
-        `;
-        document.head.appendChild(pawStyle);
-
-        // 11. 标题悬停动画
-        document.querySelectorAll('.module h2').forEach(heading => {
-            heading.addEventListener('mouseover', function() {
-                this.style.transform = 'translateX(10px)';
-                this.style.transition = 'transform 0.3s ease';
-            });
-            heading.addEventListener('mouseout', function() {
-                this.style.transform = 'translateX(0)';
-            });
-        });
-
-        // 12. 食物卡片互动
-        document.querySelectorAll('.food-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const text = this.querySelector('strong').textContent;
-                showCuteNotification('Lila 喜欢 ' + text + ' 😋');
-                this.style.transform = 'scale(1.1) rotate(5deg)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 300);
-            });
-        });
-
-        // 13. 点击显示logo特效（桌面端和移动端）
-        function handleClickOrTouch(event) {
-            // 不在按钮、输入框等交互元素上显示logo
-            if (event.target.tagName === 'BUTTON' || event.target.tagName === 'A' || 
-                event.target.closest('.nav-btn')) {
-                return;
-            }
-            
-            let x, y;
-            if (event.touches) {
-                // 触摸事件 - 移动端
-                const touch = event.touches[0] || event.changedTouches[0];
-                x = touch.clientX;
-                y = touch.clientY;
-            } else {
-                // 点击事件 - 桌面端
-                x = event.clientX;
-                y = event.clientY;
-            }
-            
-            createLogoAtClick(x, y);
-        }
-
-        // 添加点击和触摸事件
-        document.addEventListener('click', handleClickOrTouch);
-        document.addEventListener('touchend', handleClickOrTouch);
-
-        function createLogoAtClick(x, y) {
-            const logo = document.createElement('img');
-            logo.src = 'pic/logo.PNG';
-            logo.style.cssText = `
-                position: fixed;
-                left: ${x}px;
-                top: ${y}px;
-                width: 40px;
-                height: 40px;
-                pointer-events: none;
-                animation: logoFloat 2s ease-out forwards;
-                z-index: 999;
-                transform: translate(-50%, -50%);
-            `;
-            document.body.appendChild(logo);
-            
-            setTimeout(() => logo.remove(), 2000);
-        }
-
-        // 添加logo飘动动画
-        const logoStyle = document.createElement('style');
-        logoStyle.textContent = `
-            @keyframes logoFloat {
-                0% {
-                    opacity: 1;
-                    transform: translate(-50%, -50%) scale(1) rotate(0deg);
-                }
-                100% {
-                    opacity: 0;
-                    transform: translate(-50%, -200px) scale(0.8) rotate(360deg);
-                }
-            }
-        `;
-        document.head.appendChild(logoStyle);
-
-        // 14. 加载完成显示随机知识
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                showCuteNotification(getRandomLilaFact());
-            }, 2500);
-        });
-    </script>
+    </main>
+    <footer class="footer"><a class="brand" href="#intro">lila.</a><p>认真生活，可爱是日常。<span>Made with love & little paw prints.</span></p><a href="#top" aria-label="回到顶部">回到顶部 ↑</a></footer>
+</div>
+<aside class="secret-toast" id="secret-toast" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <img src="pic/logo.PNG" alt="" width="48" height="48">
+    <div><span class="card-label">P.S. A LITTLE LILA SECRET</span><p id="lila-fact"></p></div>
+    <span class="toast-star" aria-hidden="true">✦</span>
+</aside>
 </body>
 </html>
