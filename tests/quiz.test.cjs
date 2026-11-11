@@ -44,3 +44,13 @@ test('each question is worth 1 point and exactly 8 is the passing boundary', () 
     }
     assert.equal(quiz.gradeQuiz(questions, Array(10).fill(null)).score, 0);
 });
+
+test('0–3 is angry, 4–7 is encouraging, and 8+ is passed', () => {
+    const feedback = vm.runInNewContext(source + '\ngetQuizFeedback');
+    for(const score of [0,1,2,3]) {
+        assert.equal(feedback(score).className,'angry');
+        assert.match(feedback(score).title,/Lila 生气/);
+    }
+    for(const score of [4,5,6,7]) assert.equal(feedback(score).className,'try-again');
+    for(const score of [8,9,10]) assert.equal(feedback(score).className,'passed');
+});

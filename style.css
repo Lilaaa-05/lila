@@ -524,3 +524,30 @@ body {
     .review-item summary small { display: none; }
     .review-answer { padding: 0 14px 15px; }
 }
+.exam-result.angry { background: #fff0e8; border-color: #e7b6a7; }
+.exam-result.angry .exam-score { color: #c17b70; }
+.exam-result.angry .result-sticker { font-size: 40px; }
+.certificate-claim { margin-top: 26px; padding: 25px; border: 1.5px dashed #d5a5bc; border-radius: 15px; background: #fff9fc; }
+.certificate-heading h3 { font-size: 22px; margin: 12px 0 7px; }
+.certificate-heading>p { color: var(--muted); font-size: 12px; }
+.certificate-heading .card-label { font-size: 9px; letter-spacing: 1.2px; }
+#certificate-form { margin: 23px 0 20px; }
+#certificate-form>label { font-size: 12px; font-weight: 600; display: block; margin-bottom: 8px; }
+#certificate-form>label>span { color: var(--muted); font-weight: 400; }
+.certificate-input-row { display: flex; align-items: stretch; gap: 14px; }
+#certificate-name { min-width: 0; flex: 1; padding: 13px 15px; border: 1px solid #c2cfe7; border-radius: 10px; background: #fff; color: var(--ink); font: inherit; font-size: 13px; }
+#certificate-name:focus { outline: 2px solid #4168b3; outline-offset: 2px; }
+#certificate-download { flex-shrink: 0; font-size: 12px; }
+#certificate-download:disabled { cursor: wait; opacity: .6; }
+#certificate-name-hint { font-size: 10px; color: var(--muted); margin-top: 10px; }
+#certificate-status { font-size: 12px; color: var(--green); margin-top: 8px; }
+.certificate-preview { overflow: hidden; background: #fff; border: 1px solid #e5d8e4; border-radius: 10px; }
+.certificate-preview canvas { display: block; width: 100%; height: auto; }
+@media(max-width:700px) {
+    .certificate-claim { padding: 18px 13px; }
+    .certificate-input-row { flex-direction: column; align-items: stretch; }
+    #certificate-download { justify-content: center; }
+    .certificate-heading h3 { font-size: 20px; }
+    .certificate-heading .card-label { font-size: 8px; letter-spacing: .8px; }
+    .exam-result.angry h3 { font-size: 23px; }
+}

@@ -1,1 +1,5 @@
 *.txt
+
+# Generated certificate previews and QA artifacts
+output/
+tmp/

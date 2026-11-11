@@ -53,6 +53,12 @@ function gradeQuiz(questions, answers) {
     return {score, passed: score >= 8};
 }
 
+function getQuizFeedback(score) {
+    if (score >= 8) return {title: '合格！Lila 认证亲友。', description: '恭喜通过认定考试！你已经很懂这位小朋友啦。', sticker: '✿', className: 'passed'};
+    if (score < 4) return {title: 'Lila 生气啦！哼！', description: '你是不是还没认真认识我？小爪爪叉腰！再读读指南，回来哄好我吧。', sticker: '😤', className: 'angry'};
+    return {title: '差一点点，再认识我一些。', description: '8 分即可合格。看看下面的解析，下次一定更了解 Lila。', sticker: '♡', className: 'try-again'};
+}
+
 const quizRoot = document.querySelector('#quiz-stage');
 let examQuestions = [];
 let examAnswers = [];
@@ -120,21 +126,66 @@ function renderQuizQuestion(message = '') {
 
 function renderQuizResult() {
     const {score, passed} = gradeQuiz(examQuestions, examAnswers);
+    const feedback = getQuizFeedback(score);
     quizRoot.innerHTML = `
-        <div class="exam-result ${passed ? 'passed' : 'try-again'}">
-            <span class="card-label">LILA CERTIFICATION · RESULT</span><span class="result-sticker" aria-hidden="true">${passed ? '✿' : '♡'}</span>
-            <h3 tabindex="-1">${passed ? '合格！Lila 认证亲友。' : '差一点点，再认识我一些。'}</h3>
+        <div class="exam-result ${feedback.className}">
+            <span class="card-label">LILA CERTIFICATION · RESULT</span><span class="result-sticker" aria-hidden="true">${feedback.sticker}</span>
+            <h3 tabindex="-1">${feedback.title}</h3>
             <div class="exam-score">${score}<span> / 10 分</span></div>
-            <p>${passed ? '恭喜通过认定考试！你已经很懂这位小朋友啦。' : '8 分即可合格。看看下面的解析，下次一定更了解 Lila。'}</p>
+            <p>${feedback.description}</p>
             <button type="button" class="primary-btn" id="exam-retry">重新随机抽 10 题 ↻</button>
         </div>
+        ${passed ? `<section class="certificate-claim" aria-labelledby="certificate-title">
+            <div class="certificate-heading"><span class="card-label">A LITTLE CERTIFICATE, SIGNED WITH LOVE</span><h3 id="certificate-title">领取你的亲友证书</h3><p>有 Lila 的签名、专属小爪印，还有今天的日期。</p></div>
+            <form id="certificate-form"><label for="certificate-name">证书上的称呼 <span>（选填）</span></label><div class="certificate-input-row"><input id="certificate-name" type="text" maxlength="24" autocomplete="nickname" placeholder="例如：小民叔叔" aria-describedby="certificate-name-hint"><button type="submit" class="primary-btn" id="certificate-download">下载证书 PDF ↓</button></div><p id="certificate-name-hint">留空会写作「Lila 的好朋友」。证书直接下载到你的设备。</p><p id="certificate-status" role="status" aria-live="polite"></p></form>
+            <div class="certificate-preview"><canvas id="certificate-preview" role="img" aria-label="合格证书预览，含成绩、日期、Lila 签名和爪印"></canvas></div>
+        </section>` : ''}
         <div class="review-heading"><h3>答案与小解析</h3><span>答对 ${score} 题 · 答错 ${10 - score} 题</span></div>
         <div class="exam-review">${examQuestions.map((question, index) => {
             const correct = examAnswers[index] === question.answer;
             return `<details class="review-item ${correct ? 'correct' : 'incorrect'}" ${correct ? '' : 'open'}><summary><span class="review-mark">${correct ? '✓' : '×'}</span><span>${index + 1}. ${question.question}</span><small>${correct ? '答对啦' : '再记一下'}</small></summary><div class="review-answer"><p>你的答案：${question.options[examAnswers[index]]}</p><p><strong>正确答案：${question.options[question.answer]}</strong></p><p>${question.explanation}</p></div></details>`;
         }).join('')}</div>`;
     quizRoot.querySelector('#exam-retry').addEventListener('click', startQuiz);
+    if (passed) setupCertificate(score);
     focusQuizHeading();
+}
+
+function setupCertificate(score) {
+    const canvas = quizRoot.querySelector('#certificate-preview');
+    const input = quizRoot.querySelector('#certificate-name');
+    const status = quizRoot.querySelector('#certificate-status');
+    const downloadButton = quizRoot.querySelector('#certificate-download');
+    let details = LilaCertificate.createCertificateDetails(score);
+    function updatePreview() {
+        // A fresh Tokyo date is used even if the result page stays open overnight.
+        if (details.issuedOn !== LilaCertificate.certificateDate()) {
+            details = LilaCertificate.createCertificateDetails(score);
+        }
+        LilaCertificate.drawCertificate(canvas, details, input.value);
+    }
+    try { updatePreview(); } catch (error) { status.textContent = error.message; }
+    input.addEventListener('input', () => {
+        status.textContent = '';
+        try { updatePreview(); } catch (error) { status.textContent = error.message; }
+    });
+    quizRoot.querySelector('#certificate-form').addEventListener('submit', async event => {
+        event.preventDefault();
+        if (downloadButton.disabled) return;
+        downloadButton.disabled = true;
+        downloadButton.textContent = '正在制作证书…';
+        status.textContent = '';
+        try {
+            await document.fonts.ready;
+            updatePreview();
+            LilaCertificate.downloadCertificate(canvas, details);
+            status.textContent = '证书已准备好下载，请查看浏览器的下载列表。Lila 已经亲爪签好啦！';
+        } catch (error) {
+            status.textContent = '证书生成失败，请重试，或更换浏览器后再试。';
+        } finally {
+            downloadButton.disabled = false;
+            downloadButton.textContent = '下载证书 PDF ↓';
+        }
+    });
 }
 
 document.querySelector('#exam-start').addEventListener('click', startQuiz);
