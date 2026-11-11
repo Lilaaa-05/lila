@@ -5,9 +5,9 @@ const vm = require('node:vm');
 const source = fs.readFileSync(require('node:path').join(__dirname, '../quiz.js'), 'utf8').split('const quizRoot =')[0];
 const quiz = vm.runInNewContext(source + '\n({quizQuestions, drawQuizQuestions, gradeQuiz})');
 
-test('30 unique questions each have four distinct options and a valid answer', () => {
-    assert.equal(quiz.quizQuestions.length, 30);
-    assert.equal(new Set(quiz.quizQuestions.map(q => q.question)).size, 30);
+test('expanded bank has at least 58 unique questions with valid options and answers', () => {
+    assert.ok(quiz.quizQuestions.length >= 58);
+    assert.equal(new Set(quiz.quizQuestions.map(q => q.question)).size, quiz.quizQuestions.length);
     for (const q of quiz.quizQuestions) {
         assert.equal(q.options.length, 4);
         assert.equal(new Set(q.options).size, 4);
